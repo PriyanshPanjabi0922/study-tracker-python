@@ -12,8 +12,10 @@ class study_tacker:
         study_session_list = json.load(store_session)  
     
     for each_session in study_session_list:
+
         if each_session["session_counter"]>=highest_count:
-                    highest_count = each_session["session_counter"]
+            highest_count = each_session["session_counter"]
+
         session_counter = highest_count + 1
 
     while True:
@@ -29,15 +31,103 @@ class study_tacker:
         print("6.Delete Session:")
         print("7.Exit:")
 
-        user_choice = int(input("\nEnter Your Choice here:"))
+        try:
+            user_choice = int(input("\nEnter Your Choice here:"))       
+
+        except ValueError:
+            print("Invalid Input.")
+            print("Please enter a numbeer between 1 to 7")
+            continue            
 
 ### 1. Add Session  
         if user_choice == 1:
-            session_subject = input("Enter the subject name:")
-            session_date = input("Enter the date (formate : DD-MM-YYYY):")
-            hr_study = int(input("Enter the houre of study session:"))
-            topic_covered= input("Enter the Topic name you covered:")
-            session_difficulty = input("Enter the dificulty level of topic(ex. hard) :")
+            
+            ### subject select
+
+            while True : 
+                session_subject = input("Enter the subject name:").strip()      
+                if session_subject == '':
+                    print("Invalid Subject name!") 
+                else:
+                    break  
+
+            ### session date  
+            
+            while True:
+
+                session_date = input("Enter the date (formate : DD-MM-YYYY):").strip()
+                
+                if session_date == '':
+                    print("Date cannot be empty.")
+                    print("Please enter the date again.")
+                    continue
+
+                else:
+                    try :
+                        today_date = datetime.now().date()
+                        session_date = datetime.strptime(session_date,"%d-%m-%Y").date()
+                        if session_date > today_date:
+                            print("Future dates are not allowed.")
+                            print("please enter today's date or past date.")
+                            
+                        else:
+                            break
+
+                    except ValueError:
+                        print("invalid date, use formate: DD-MM-YYYY ")
+
+            ### hours of session   
+                    
+            while True:
+
+                hr_study = float(input("Enter the houre of study session:"))
+
+                if hr_study == 0:
+                    print("hours should not be 0!")
+                elif hr_study < 0:
+                    print("hours should not be Negative!")
+                elif hr_study > 12:
+                    print("i think you had mistakely write wrong input.")
+                else:
+                    break
+            
+            ### Topic which is covered
+
+            while True:
+                valid_topic = True
+
+                topic_covered= input("Enter the Topic name you covered:").strip()
+
+                if topic_covered == '':
+                    print("don't enter the empty space.")
+                    continue
+                        
+                for each_char in topic_covered:
+                    if each_char.isalpha() or each_char == ' ':
+                        
+                        valid_topic  = True
+                    else:
+                        valid_topic = False
+                        print("Only character and space is allowed.")
+                        break
+
+                if valid_topic:
+                    break
+               
+            ### Difficulty level
+            
+            while True:
+                session_difficulty = input("Enter the dificulty level of topic(ex. hard) :").strip().lower()
+
+                if session_difficulty == '':
+                    print("Difficulty should not be empty!")
+                elif session_difficulty in ["easy","medium","hard"]:
+                    break 
+                else:
+                    print("Please enter only: easy,medium or hard:")
+
+
+            ### dictionary creating.
 
             study_session_dict = {
                 "session_counter": session_counter,
@@ -51,8 +141,6 @@ class study_tacker:
             study_session_list.append(study_session_dict)
             session_counter+=1
             
-       
-
 ### 2. View all Session
 
         elif user_choice ==2:
@@ -65,11 +153,11 @@ class study_tacker:
             user_search_sub = input("Enter the subject name you want to search:")
             
             for each_sub in study_session_list:
-                if session_subject == "":
+                if each_sub["session_subject"] == "":
                     print("there is no subject in the study session!")
                     user_search_sub = input("Again try it:")
                 elif user_search_sub==each_sub["session_subject"]:  
-                     print(f"your search subject:{session_subject} is present!")
+                     print(f"your search subject:{each_sub['session_subject']} is present!")
 
 ### 4. Total Study Hours
 
@@ -132,5 +220,5 @@ class study_tacker:
 
         else:
             print("Enter valid choice!")
-            user_choice = int(input("\nEnter Your Choice here:"))
-                
+            
+           
