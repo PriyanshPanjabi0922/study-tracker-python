@@ -80,16 +80,23 @@ class study_tacker:
                     
             while True:
 
-                hr_study = float(input("Enter the houre of study session:"))
+                    try:
+                        hr_study = float(input("Enter the houre of study session:"))
 
-                if hr_study == 0:
-                    print("hours should not be 0!")
-                elif hr_study < 0:
-                    print("hours should not be Negative!")
-                elif hr_study > 12:
-                    print("i think you had mistakely write wrong input.")
-                else:
-                    break
+                    except ValueError:
+                        print("invalid input!")
+                        print("Enter the hour of you session")
+                        continue
+
+                    if hr_study == 0:
+                        print("hours should not be 0!")
+                    elif hr_study < 0:
+                        print("hours should not be Negative!")
+                    elif hr_study > 12:
+                        print("i think you had mistakely write wrong input.")
+                        
+                    else:
+                        break            
             
             ### Topic which is covered
 
@@ -147,18 +154,22 @@ class study_tacker:
             print("\nBelow are the all the created Sessions by you:")
             print(study_session_list)
             
-### 3. Search a subject
+### 3. Search a subject              
 
         elif user_choice == 3:
-            user_search_sub = input("Enter the subject name you want to search:")
+            subject_found = False
+            user_search_sub = input("Enter the subject name you want to search:").strip()
             
             for each_sub in study_session_list:
-                if each_sub["session_subject"] == "":
-                    print("there is no subject in the study session!")
-                    user_search_sub = input("Again try it:")
-                elif user_search_sub==each_sub["session_subject"]:  
-                     print(f"your search subject:{each_sub['session_subject']} is present!")
 
+                if user_search_sub == each_sub["session_subject"]:
+                    subject_found = True
+                    print(f"your search subject:{each_sub['session_subject']} is present!")
+                    break
+
+            if subject_found is False:
+                print("subject is not present")
+                
 ### 4. Total Study Hours
 
         elif user_choice == 4:
@@ -195,16 +206,27 @@ class study_tacker:
 ### 6. Delete Session:
 
         elif user_choice == 6:
-            user_delete_session = int(input("Enter the subject number to delete that subject:"))
+            while True:
 
-            if user_delete_session > len(study_session_list):
-                print("There is no session of this number , sorry.")
+                try:
+                    user_delete_session = int(input("Enter the subject number to delete that subject:"))
 
-            elif user_delete_session < 1:
-                print("Negaive is not selected!")
-            
-            else:
-                study_session_list.pop((user_delete_session)-1)
+                except ValueError:
+                    print("invalid input!")
+                    print("Enter the session number you want to delete")
+                    continue
+
+                if user_delete_session > len(study_session_list):
+                    print("There is no session of this number , sorry.")
+
+                elif user_delete_session < 1:
+                    print("Negaive is not selected!")
+                
+
+                else:
+                    study_session_list.pop((user_delete_session)-1)
+                    print("Session deleted successfully.")
+                    break
 
 ### 7. exit
 
@@ -221,4 +243,5 @@ class study_tacker:
         else:
             print("Enter valid choice!")
             
+
            
