@@ -9,8 +9,21 @@ class study_tacker:
     highest_count =1
 
     with open("storing_session.json","r") as store_session:
-        study_session_list = json.load(store_session)  
-    
+        try:
+
+            study_session_list = json.load(store_session)
+            for each_turn in study_session_list:
+                each_turn["session_date"] =datetime.strptime(each_turn["session_date"],"%d-%m-%Y").date()
+
+            
+
+        except json.JSONDecodeError:
+            print("JSON file is empty or invalid.")
+            print("\nCreating an empty study_session list.")
+            study_session_list = []
+            
+
+
     for each_session in study_session_list:
 
         if each_session["session_counter"]>=highest_count:
@@ -183,7 +196,7 @@ class study_tacker:
 ### 5. Show today's study
 
         elif user_choice == 5:
-            today_date = datetime.now().date().strftime("%d-%m-%Y") 
+            today_date = datetime.now().date()
             total_hr =0
             found = False
             for each_turn in study_session_list:
@@ -233,6 +246,8 @@ class study_tacker:
         elif user_choice == 7:
 
             with open("storing_session.json","w") as store_session:
+                for each_turn in study_session_list:
+                    each_turn["session_date"] =each_turn["session_date"].strftime("%d-%m-%Y")
                 json.dump(study_session_list,store_session)
             print("Thank you for using this app :)")
 
@@ -242,6 +257,7 @@ class study_tacker:
 
         else:
             print("Enter valid choice!")
+
             
 
            
