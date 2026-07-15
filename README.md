@@ -1,203 +1,144 @@
 # 📚 Study Tracker
 
-A command-line Python application for recording, managing, and analyzing study sessions.
+A command-line Python application to record, manage, and review study sessions.
 
-This project is being built as an independent learning project to strengthen my Python fundamentals, problem-solving skills, input validation, exception handling, JSON file handling, and overall software development practices.
-
----
-
-# Current Version
-
-**Version:** v1.1
+This project is being built as an independent learning project to strengthen Python programming fundamentals, problem-solving, debugging, and software engineering practices.
 
 ---
 
-# Features
+## 🚀 Current Version
 
-## 1. Add Study Session
-
-Users can add a study session with:
-
-- Subject Name
-- Study Date
-- Study Hours
-- Topic Covered
-- Difficulty Level
-
-Each study session is automatically assigned a unique Session Number.
+**Version:** v1.1 (In Progress)
 
 ---
 
-## 2. View All Sessions
+## ✅ Features Completed
 
-Displays every study session stored in the application.
-
----
-
-## 3. Search a Subject
-
-Allows users to search whether a subject exists in the stored study sessions.
-
----
-
-## 4. Total Study Hours
-
-Calculates and displays the total study hours across all recorded sessions.
+### Menu System
+- Add Study Session
+- View All Sessions
+- Search Subject
+- Total Study Hours
+- Show Today's Study
+- Delete Session
+- Exit Application
 
 ---
 
-## 5. Show Today's Study
+### Input Validation
 
-Displays all study sessions recorded for today's date along with the total study hours for today.
+Implemented validation for:
 
----
-
-## 6. Delete Session
-
-Allows users to delete a study session using its Session Number.
-
----
-
-# Input Validation
-
-The application performs validation to maintain correct and meaningful data.
-
-## Subject Name
-
-- Cannot be empty
-
-## Study Date
-
-- Must follow the format: `DD-MM-YYYY`
-- Invalid dates are rejected
-- Future dates are not allowed
-
-## Study Hours
-
-- Accepts numeric values only
-- Rejects text input
-- Cannot be zero
-- Cannot be negative
-- Cannot be greater than 12 hours
-
-## Topic Covered
-
-- Cannot be empty
-- Allows only alphabets and spaces
-
-## Difficulty Level
-
-Accepts only:
-
-- easy
-- medium
-- hard
-
-Input is case-insensitive.
-
-## Delete Session
-
-- Rejects invalid session numbers
-- Rejects negative numbers
-- Handles non-numeric input safely using `try/except`
-
-## Menu Choice
-
-- Handles invalid menu input
-- Uses exception handling for non-numeric values
+- Menu selection
+- Subject name (cannot be empty)
+- Date format
+- Future dates
+- Study hours
+    - Prevents invalid text input
+    - Prevents negative hours
+    - Prevents zero hours
+    - Prevents unrealistic hours (>12)
+- Topic name
+    - Prevents empty input
+    - Allows only alphabets and spaces
+- Difficulty level
+    - Easy
+    - Medium
+    - Hard
+- Delete session input validation
+- Search subject handling
 
 ---
 
-# Data Storage
+### JSON Storage
 
-All study sessions are stored in:
-
-```
-storing_session.json
-```
-
-Data is automatically saved when the user exits the application.
+- Save study sessions into JSON
+- Load previous study sessions automatically
+- Session counter persists after restarting application
 
 ---
 
-# Technologies Used
+### JSON Error Handling
 
-- Python
+Implemented handling for:
+
+- Empty JSON files
+- Invalid JSON data (`JSONDecodeError`)
+- Safe initialization of study session list
+
+---
+
+### Date Handling
+
+Implemented proper conversion between:
+
+- `date` → `string` before saving to JSON
+- `string` → `date` after loading from JSON
+
+This keeps the internal program logic consistent while allowing JSON storage.
+
+---
+
+### Testing Completed
+
+Successfully tested:
+
+- Empty JSON file
+- First application launch
+- Adding first session
+- Saving sessions
+- Reloading sessions
+- Restarting application
+- Adding additional sessions
+- Showing today's study
+- Searching subjects
+- Deleting sessions
+- Session persistence across multiple runs
+
+---
+
+## 🛠 Technologies Used
+
+- Python 3
 - JSON
 - datetime module
 
 ---
 
-# Python Concepts Practiced
+## 📖 Learning Goals
 
-- Variables
-- Data Types
-- Conditional Statements
-- Loops
+This project focuses on learning:
+
+- Python fundamentals
+- Functions
 - Lists
 - Dictionaries
-- Nested Data Structures
-- Exception Handling (`try` / `except`)
-- Input Validation
-- JSON File Handling
-- Date & Time Handling (`datetime`)
-- Program Design
+- Loops
+- Conditional logic
+- Exception handling
+- File handling
+- JSON persistence
 - Debugging
+- Data validation
+- Working with date objects
+- Software testing
 
 ---
 
-# Completed in Version 1.1
+## 🚧 Planned for Next Version
 
-- ✅ Menu System
-- ✅ Add Study Session
-- ✅ Session Counter
-- ✅ JSON Storage
-- ✅ Subject Validation
-- ✅ Date Validation
-- ✅ Study Hour Validation
-- ✅ Topic Validation
-- ✅ Difficulty Level Validation
-- ✅ View All Sessions
-- ✅ Search Subject
-- ✅ Total Study Hours
-- ✅ Show Today's Study
-- ✅ Delete Session
-- ✅ Exception Handling for Numeric Inputs
+Remaining work before completing v1.1:
 
----
-
-# Remaining Work for Version 1.1
-
-The following tasks will be completed before starting Version 1.2:
-
-- Handle empty JSON file safely
-- Handle missing or corrupted JSON file
-- Improve View All Sessions formatting
-- Perform complete end-to-end testing
-- Fix bugs discovered during testing
+- Improve handling when JSON file does not exist (`FileNotFoundError`)
 - Final code cleanup and refactoring
+- Improve output formatting for viewing sessions
+- Complete end-to-end QA testing
+- Fix any bugs discovered during testing
 
 ---
 
-# Future Versions
+## 👨‍💻 Author
 
-Planned improvements after Version 1.1:
-
-- Better formatted output using tables
-- Edit existing study sessions
-- Subject-wise statistics
-- Monthly and weekly study reports
-- CSV export
-- Improved search options
-- Refactor code into functions and multiple files
-- Object-Oriented Design improvements
-
----
-
-# Author
-
-**Priyansh Panjabi**
+Priyansh Panjabi
 
 Independent Python Learning Project
-
-Learning by building real-world projects.
