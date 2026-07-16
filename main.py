@@ -8,6 +8,8 @@ class study_tacker:
     session_counter =1
     highest_count =1
 
+    print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
+
     with open("storing_session.json","r") as store_session:
         try:
 
@@ -19,7 +21,7 @@ class study_tacker:
 
         except json.JSONDecodeError:
             print("JSON file is empty or invalid.")
-            print("\nCreating an empty study_session list.")
+            print("\nCreating an empty study session list...")
             study_session_list = []
             
 
@@ -32,8 +34,6 @@ class study_tacker:
         session_counter = highest_count + 1
 
     while True:
-
-        print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
 
         print("\n==== Menu ====\n")
         print("1.Add Study session:")
@@ -48,8 +48,8 @@ class study_tacker:
             user_choice = int(input("\nEnter Your Choice here:"))       
 
         except ValueError:
-            print("Invalid Input.")
-            print("Please enter a numbeer between 1 to 7")
+            print("Invalid input.")
+            print("Please enter a number between 1 and 7")
             continue            
 
 ### 1. Add Session  
@@ -60,7 +60,8 @@ class study_tacker:
             while True : 
                 session_subject = input("Enter the subject name:").strip()      
                 if session_subject == '':
-                    print("Invalid Subject name!") 
+                    print("subject name cannot be empty.") 
+                    print("please enter a valid subject name")
                 else:
                     break  
 
@@ -72,7 +73,7 @@ class study_tacker:
                 
                 if session_date == '':
                     print("Date cannot be empty.")
-                    print("Please enter the date again.")
+                    print("Please enter the date in DD-MM-YYYY format.")
                     continue
 
                 else:
@@ -87,7 +88,7 @@ class study_tacker:
                             break
 
                     except ValueError:
-                        print("invalid date, use formate: DD-MM-YYYY ")
+                        print("invalid date format, Please use DD-MM-YYYY.")
 
             ### hours of session   
                     
@@ -98,15 +99,16 @@ class study_tacker:
 
                     except ValueError:
                         print("invalid input!")
-                        print("Enter the hour of you session")
+                        print("write the Hour of the session")
                         continue
 
                     if hr_study == 0:
-                        print("hours should not be 0!")
+                        print("Study hours must be greater than 0.")
                     elif hr_study < 0:
-                        print("hours should not be Negative!")
+                        print("Study hours cannot be negative.")
+                        print("Please enter a positive number.")
                     elif hr_study > 12:
-                        print("i think you had mistakely write wrong input.")
+                        print("Study hours must be between 1 and 12")
                         
                     else:
                         break            
@@ -119,16 +121,17 @@ class study_tacker:
                 topic_covered= input("Enter the Topic name you covered:").strip()
 
                 if topic_covered == '':
-                    print("don't enter the empty space.")
+                    print("Topic name cannot be empty.")
+                    print("Please enter a topic name")
                     continue
                         
                 for each_char in topic_covered:
                     if each_char.isalpha() or each_char == ' ':
-                        
                         valid_topic  = True
+
                     else:
                         valid_topic = False
-                        print("Only character and space is allowed.")
+                        print("Only letter and spaces are allowed.")
                         break
 
                 if valid_topic:
@@ -140,11 +143,15 @@ class study_tacker:
                 session_difficulty = input("Enter the dificulty level of topic(ex. hard) :").strip().lower()
 
                 if session_difficulty == '':
-                    print("Difficulty should not be empty!")
+                    print("Difficulty cannot be empty.")
+                    print("Please enter easy, medium or hard.")
+
                 elif session_difficulty in ["easy","medium","hard"]:
                     break 
+
                 else:
-                    print("Please enter only: easy,medium or hard:")
+                    print("invalid input!")
+                    print("Please enter only: easy,medium or hard.")
 
 
             ### dictionary creating.
@@ -181,7 +188,8 @@ class study_tacker:
                     break
 
             if subject_found is False:
-                print("subject is not present")
+                print("subject not found.")
+                print("Please enter an existing subject name.")
                 
 ### 4. Total Study Hours
 
@@ -230,15 +238,21 @@ class study_tacker:
                     continue
 
                 if user_delete_session > len(study_session_list):
-                    print("There is no session of this number , sorry.")
+                    print("Session number not found.")
+                    print("Please enter a valid session number.")
 
-                elif user_delete_session < 1:
-                    print("Negaive is not selected!")
+                elif user_delete_session == 0:
+                    print("session number cannot be 0.")
+                    print("Enter the value greater than 0")
+
+                elif user_delete_session < 0:
+                    print("Session number cannot be negative")
+                    print("Enter the sesssion which are present.")
                 
 
                 else:
                     study_session_list.pop((user_delete_session)-1)
-                    print("Session deleted successfully.")
+                    print("\nSession deleted successfully.")
                     break
 
 ### 7. exit
@@ -256,7 +270,8 @@ class study_tacker:
 ### Else part 
 
         else:
-            print("Enter valid choice!")
+            print("invalid choice.")
+            print("Please Select a number between 1 and 7.")
 
             
 
