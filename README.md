@@ -1,8 +1,8 @@
-# 📚 Study Tracker
+# 📚 Study Tracker (Python CLI)
 
-A command-line Python application to record, manage, and review study sessions.
+A command-line Study Tracker application built using Python.
 
-This project is being built as an independent learning project to strengthen Python programming fundamentals, problem-solving, debugging, and software engineering practices.
+This project is part of my Python learning journey, where I am building everything independently to strengthen my programming fundamentals, problem-solving skills, debugging ability, and software development practices.
 
 ---
 
@@ -14,131 +14,122 @@ This project is being built as an independent learning project to strengthen Pyt
 
 ## ✅ Features Completed
 
-### Menu System
-- Add Study Session
-- View All Sessions
-- Search Subject
-- Total Study Hours
-- Show Today's Study
-- Delete Session
-- Exit Application
+### 1. Add Study Session
+- Add a new study session.
+- Stores:
+  - Session Number
+  - Subject Name
+  - Study Date
+  - Hours Studied
+  - Topic Covered
+  - Difficulty Level
 
 ---
 
-### Input Validation
+### 2. View All Sessions
+- Displays every study session stored in the application.
 
-Implemented validation for:
+---
 
-- Menu selection
-- Subject name (cannot be empty)
-- Date format
+### 3. Search a Subject
+- Search for a subject by its name.
+- Displays whether the subject exists.
+
+---
+
+### 4. Total Study Hours
+- Calculates the total number of study hours.
+
+---
+
+### 5. Show Today's Study
+- Displays today's study sessions.
+- Calculates today's total study hours.
+
+---
+
+### 6. Delete Session
+- Delete a session using its session number.
+
+---
+
+### 7. Persistent Storage
+- Saves all sessions into a JSON file.
+- Loads previous sessions automatically when the application starts.
+
+---
+
+### 8. Empty JSON File Handling
+- Detects an empty or invalid JSON file.
+- Automatically creates an empty study session list instead of crashing.
+
+---
+
+### 9. Date Serialization
+- Converts `datetime.date` objects into strings before saving.
+- Converts them back into `date` objects while loading.
+
+---
+
+### 10. Improved Input Validation
+The application now provides clearer and more user-friendly error messages for:
+
+- Invalid menu choices
+- Empty subject names
+- Invalid date formats
 - Future dates
-- Study hours
-    - Prevents invalid text input
-    - Prevents negative hours
-    - Prevents zero hours
-    - Prevents unrealistic hours (>12)
-- Topic name
-    - Prevents empty input
-    - Allows only alphabets and spaces
-- Difficulty level
-    - Easy
-    - Medium
-    - Hard
-- Delete session input validation
-- Search subject handling
+- Invalid study hours
+- Negative or zero study hours
+- Invalid topic names
+- Invalid difficulty levels
+- Invalid delete requests
+- Subject search failures
+
+The goal is to guide the user instead of only reporting an error.
 
 ---
 
-### JSON Storage
+# 🛠 Technologies Used
 
-- Save study sessions into JSON
-- Load previous study sessions automatically
-- Session counter persists after restarting application
-
----
-
-### JSON Error Handling
-
-Implemented handling for:
-
-- Empty JSON files
-- Invalid JSON data (`JSONDecodeError`)
-- Safe initialization of study session list
-
----
-
-### Date Handling
-
-Implemented proper conversion between:
-
-- `date` → `string` before saving to JSON
-- `string` → `date` after loading from JSON
-
-This keeps the internal program logic consistent while allowing JSON storage.
-
----
-
-### Testing Completed
-
-Successfully tested:
-
-- Empty JSON file
-- First application launch
-- Adding first session
-- Saving sessions
-- Reloading sessions
-- Restarting application
-- Adding additional sessions
-- Showing today's study
-- Searching subjects
-- Deleting sessions
-- Session persistence across multiple runs
-
----
-
-## 🛠 Technologies Used
-
-- Python 3
+- Python 
 - JSON
 - datetime module
 
 ---
 
-## 📖 Learning Goals
+# 📖 Learning Objectives
 
-This project focuses on learning:
+This project is helping me practice:
 
-- Python fundamentals
-- Functions
+- Variables
+- Data Types
 - Lists
 - Dictionaries
 - Loops
-- Conditional logic
-- Exception handling
-- File handling
-- JSON persistence
-- Debugging
-- Data validation
-- Working with date objects
-- Software testing
+- Conditional Statements
+- Functions (planned)
+- Exception Handling
+- JSON File Handling
+- Date & Time Handling
+- Input Validation
+- Program Debugging
+- Writing cleaner user-friendly CLI applications
 
 ---
 
-## 🚧 Planned for Next Version
+# 📌 Next Tasks (v1.1)
 
-Remaining work before completing v1.1:
+The remaining work planned before moving to Version 1.2 is:
 
-- Improve handling when JSON file does not exist (`FileNotFoundError`)
-- Final code cleanup and refactoring
-- Improve output formatting for viewing sessions
-- Complete end-to-end QA testing
-- Fix any bugs discovered during testing
+- Refactor repetitive code to improve readability and maintainability.
+- Improve the display format of session data instead of printing raw dictionaries.
+- Perform complete end-to-end testing of every menu option.
+- Fix any bugs discovered during testing.
 
 ---
 
-## 👨‍💻 Author
+# 🎯 Project Goal
 
-Priyansh Panjabi
+This project is focused on learning core Python programming by building a real application from scratch without relying on external frameworks.
 
-Independent Python Learning Project
+Each version emphasizes writing cleaner code, improving user experience, handling edge cases, and following better programming practices.
