@@ -8,54 +8,8 @@ class study_tacker:
     session_counter =1
     highest_count =1
 
-    print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
-
-    with open("storing_session.json","r") as store_session:
-        try:
-
-            study_session_list = json.load(store_session)
-            for each_turn in study_session_list:
-                each_turn["session_date"] =datetime.strptime(each_turn["session_date"],"%d-%m-%Y").date()
-
-            
-
-        except json.JSONDecodeError:
-            print("JSON file is empty or invalid.")
-            print("\nCreating an empty study session list...")
-            study_session_list = []
-            
-
-
-    for each_session in study_session_list:
-
-        if each_session["session_counter"]>=highest_count:
-            highest_count = each_session["session_counter"]
-
-        session_counter = highest_count + 1
-
-    while True:
-
-        print("\n==== Menu ====\n")
-        print("1.Add Study session:")
-        print("2.View all Session:")
-        print("3.Search a Subject:")
-        print("4.Total Study Hours:")
-        print("5.Show today's study:")
-        print("6.Delete Session:")
-        print("7.Exit:")
-
-        try:
-            user_choice = int(input("\nEnter Your Choice here:"))       
-
-        except ValueError:
-            print("Invalid input.")
-            print("Please enter a number between 1 and 7")
-            continue            
-
-### 1. Add Session  
-        if user_choice == 1:
-            
-            ### subject select
+    def add_session(study_session_list,session_counter):
+        ### subject select
 
             while True : 
                 session_subject = input("Enter the subject name:").strip()      
@@ -64,7 +18,7 @@ class study_tacker:
                     print("please enter a valid subject name")
                 else:
                     break  
-
+  
             ### session date  
             
             while True:
@@ -167,93 +121,160 @@ class study_tacker:
 
             study_session_list.append(study_session_dict)
             session_counter+=1
+
+
+            return session_counter
+
+    def view_session(study_session_list):
+        print("\nBelow are the all the created Sessions by you:")
+        print(study_session_list)
+
+    print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
+
+    with open("storing_session.json","r") as store_session:
+        try:
+
+            study_session_list = json.load(store_session)
+            for each_turn in study_session_list:
+                each_turn["session_date"] =datetime.strptime(each_turn["session_date"],"%d-%m-%Y").date()
+
+        except json.JSONDecodeError:
+            print("JSON file is empty or invalid.")
+            print("\nCreating an empty study session list...")
+            study_session_list = []
+            
+    def search_session(study_session_list):
+        subject_found = False
+        user_search_sub = input("Enter the subject name you want to search:").strip()
+            
+        for each_sub in study_session_list:
+
+            if user_search_sub == each_sub["session_subject"]:
+                subject_found = True
+                print(f"your search subject:{each_sub['session_subject']} is present!")
+                break
+
+        if subject_found is False:
+            print("subject not found.")
+            print("Please enter an existing subject name.")
+
+    def total_session_hour(study_session_list):
+        total_hr = 0
+            
+        for each_subject in study_session_list:
+            total_hr+=each_subject["hr_study"]
+
+        print("\ntotal Hr:",total_hr) 
+
+    def today_session(study_session_list):
+        today_date = datetime.now().date()
+        total_hr =0
+        found = False
+        for each_turn in study_session_list:
+                        
+            if each_turn["session_date"] == today_date:
+                found = True
+                print("\nHere is your today's data:")
+                print("Session Number:",each_turn["session_counter"])
+                print("Subject Name:",each_turn["session_subject"])
+                print("Topic you covered :",each_turn["topic_covered"])
+                print("difficulty of the subject:",each_turn["session_difficulty"])
+                print("Hour you study this subject for today:",each_turn["hr_study"])
+                    
+                total_hr+= float(each_turn["hr_study"])
+
+                print("today total hr are:",total_hr)
+        if not found:
+            print("There is no sesion for today.")
+
+    def delete_session(study_session_list):
+        while True:
+
+            try:
+                user_delete_session = int(input("Enter the subject number to delete that subject:"))
+
+            except ValueError:
+                print("invalid input!")
+                print("Enter the session number you want to delete")
+                continue
+
+            if user_delete_session > len(study_session_list):
+                print("Session number not found.")
+                print("Please enter a valid session number.")
+
+            elif user_delete_session == 0:
+                print("session number cannot be 0.")
+                print("Enter the value greater than 0")
+
+            elif user_delete_session < 0:
+                print("Session number cannot be negative")
+                print("Enter the sesssion which are present.")
+                
+
+            else:
+                study_session_list.pop((user_delete_session)-1)
+                print("\nSession deleted successfully.")
+                break
+                
+    for each_session in study_session_list:
+
+        if each_session["session_counter"]>=highest_count:
+            highest_count = each_session["session_counter"]
+
+        session_counter = highest_count + 1
+
+    while True:
+
+        print("\n==== Menu ====\n")
+        print("1.Add Study session:")
+        print("2.View all Session:")
+        print("3.Search a Subject:")
+        print("4.Total Study Hours:")
+        print("5.Show today's study:")
+        print("6.Delete Session:")
+        print("7.Exit:")
+
+        try:
+            user_choice = int(input("\nEnter Your Choice here:"))       
+
+        except ValueError:
+            print("Invalid input.")
+            print("Please enter a number between 1 and 7")
+            continue            
+
+### 1. Add Session  
+        if user_choice == 1:
+            session_counter = add_session(study_session_list,session_counter)
+            
             
 ### 2. View all Session
 
         elif user_choice ==2:
-            print("\nBelow are the all the created Sessions by you:")
-            print(study_session_list)
+            view_session(study_session_list)
+            
             
 ### 3. Search a subject              
 
         elif user_choice == 3:
-            subject_found = False
-            user_search_sub = input("Enter the subject name you want to search:").strip()
-            
-            for each_sub in study_session_list:
-
-                if user_search_sub == each_sub["session_subject"]:
-                    subject_found = True
-                    print(f"your search subject:{each_sub['session_subject']} is present!")
-                    break
-
-            if subject_found is False:
-                print("subject not found.")
-                print("Please enter an existing subject name.")
+            search_session(study_session_list)
                 
 ### 4. Total Study Hours
 
         elif user_choice == 4:
-            total_hr = 0
+            total_session_hour(study_session_list)
             
-            for each_subject in study_session_list:
-                total_hr+=each_subject["hr_study"]
-
-            print("\ntotal Hr:",total_hr)
 
 ### 5. Show today's study
 
         elif user_choice == 5:
-            today_date = datetime.now().date()
-            total_hr =0
-            found = False
-            for each_turn in study_session_list:
-                        
-                if each_turn["session_date"] == today_date:
-                    found = True
-                    print("\nHere is your today's data:")
-                    print("Session Number:",each_turn["session_counter"])
-                    print("Subject Name:",each_turn["session_subject"])
-                    print("Topic you covered :",each_turn["topic_covered"])
-                    print("difficulty of the subject:",each_turn["session_difficulty"])
-                    print("Hour you study this subject for today:",each_turn["hr_study"])
-                    
-                    total_hr+= int(each_turn["hr_study"])
-
-                    print("today total hr are:",total_hr)
-            if not found:
-                print("There is no sesion for today.")
+            today_session(study_session_list)
+            
 
 ### 6. Delete Session:
 
         elif user_choice == 6:
-            while True:
-
-                try:
-                    user_delete_session = int(input("Enter the subject number to delete that subject:"))
-
-                except ValueError:
-                    print("invalid input!")
-                    print("Enter the session number you want to delete")
-                    continue
-
-                if user_delete_session > len(study_session_list):
-                    print("Session number not found.")
-                    print("Please enter a valid session number.")
-
-                elif user_delete_session == 0:
-                    print("session number cannot be 0.")
-                    print("Enter the value greater than 0")
-
-                elif user_delete_session < 0:
-                    print("Session number cannot be negative")
-                    print("Enter the sesssion which are present.")
-                
-
-                else:
-                    study_session_list.pop((user_delete_session)-1)
-                    print("\nSession deleted successfully.")
-                    break
+            delete_session(study_session_list)
+            
 
 ### 7. exit
 
@@ -272,7 +293,5 @@ class study_tacker:
         else:
             print("invalid choice.")
             print("Please Select a number between 1 and 7.")
-
-            
 
            
