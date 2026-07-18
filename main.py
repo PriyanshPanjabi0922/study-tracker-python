@@ -7,6 +7,7 @@ study_session_list = []
 session_counter =1
 highest_count =1
 
+
 def get_valid_subject():
     while True : 
             session_subject = input("Enter the subject name:").strip()      
@@ -82,7 +83,7 @@ def get_valid_session_topic():
                 print("Only letter and spaces are allowed.")
                 break
 
-        if valid_topic == False:
+        if not valid_topic :
             continue
         if valid_topic:
             return topic_covered
@@ -103,6 +104,34 @@ def get_valid_session_difficulty():
             print("invalid input!")
             print("Please enter only: easy,medium or hard.")
 
+def load_sessions():
+
+    with open("storing_session.json","r") as store_session:
+        try:
+
+            study_session_list = json.load(store_session)
+            for each_turn in study_session_list:
+                each_turn["session_date"] =datetime.strptime(each_turn["session_date"],"%d-%m-%Y").date()
+
+        except json.JSONDecodeError:
+            print("JSON file is empty or invalid.")
+            print("\nCreating an empty study session list...")
+            study_session_list = []
+        return study_session_list
+
+def save_sessions(study_session_list):
+    with open("storing_session.json","w") as store_session:
+            for each_turn in study_session_list:
+                each_turn["session_date"] =each_turn["session_date"].strftime("%d-%m-%Y")
+            json.dump(study_session_list,store_session)
+            
+    print("Thank you for using this app :)")
+     
+
+print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
+
+study_session_list = load_sessions()
+
 def add_session(study_session_list,session_counter):
         
     ### subject select
@@ -120,7 +149,7 @@ def add_session(study_session_list,session_counter):
     ### Difficulty level
         session_difficulty= get_valid_session_difficulty()
 
-        ### dictionary creating.
+    ### dictionary creating.
 
         study_session_dict = {
             "session_counter": session_counter,
@@ -134,26 +163,12 @@ def add_session(study_session_list,session_counter):
         study_session_list.append(study_session_dict)
         session_counter+=1
 
-
         return session_counter
 
 def view_session(study_session_list):
     print("\nBelow are the all the created Sessions by you:")
     print(study_session_list)
 
-print("\nWelcome to the Study Tracker App- By Priyansh panjabi.")
-
-with open("storing_session.json","r") as store_session:
-    try:
-
-        study_session_list = json.load(store_session)
-        for each_turn in study_session_list:
-            each_turn["session_date"] =datetime.strptime(each_turn["session_date"],"%d-%m-%Y").date()
-
-    except json.JSONDecodeError:
-        print("JSON file is empty or invalid.")
-        print("\nCreating an empty study session list...")
-        study_session_list = []
         
 def search_session(study_session_list):
     subject_found = False
@@ -166,7 +181,7 @@ def search_session(study_session_list):
             print(f"your search subject:{each_sub['session_subject']} is present!")
             break
 
-    if subject_found is False:
+    if not subject_found:
         print("subject not found.")
         print("Please enter an existing subject name.")
 
@@ -263,7 +278,8 @@ while True:
 
     elif user_choice ==2:
         view_session(study_session_list)
-                
+        
+        
 ### 3. Search a subject              
 
     elif user_choice == 3:
@@ -272,31 +288,29 @@ while True:
 ### 4. Total Study Hours
 
     elif user_choice == 4:
-        total_session_hour(study_session_list)    
+        total_session_hour(study_session_list)
+        
 
 ### 5. Show today's study
 
     elif user_choice == 5:
         today_session(study_session_list)
         
+
 ### 6. Delete Session:
 
     elif user_choice == 6:
-        delete_session(study_session_list)     
+        delete_session(study_session_list)
+        
 
 ### 7. Exit 
 
     elif user_choice == 7:
-
-        with open("storing_session.json","w") as store_session:
-            for each_turn in study_session_list:
-                each_turn["session_date"] =each_turn["session_date"].strftime("%d-%m-%Y")
-            json.dump(study_session_list,store_session)
-        print("Thank you for using this app :)")
-
-        break 
+        save_sessions(study_session_list)
+        break
 
 ### Else part 
+
     else:
         print("invalid choice.")
         print("Please Select a number between 1 and 7.")
